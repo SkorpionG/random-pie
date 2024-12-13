@@ -1,0 +1,33 @@
+{
+  "name": "random-pie",
+  "version": "1.0.0",
+  "description": "A lightweight JavaScript library providing Python-style random number generation and randomization utilities. This lightweight utility module implements the most common functions from Python's random module, making it intuitive for Python developers working with JavaScript.",
+  "main": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "random",
+    "Python random",
+    "JavaScript",
+    "JavaScript Random",
+    "randomization",
+    "utility",
+    "Python"
+  ],
+  "author": "SkorpionG2000",
+  "license": "MIT",
+  "dependencies": {
+    "range-pie": "^1.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
