@@ -1,6 +1,6 @@
 {
   "name": "random-pie",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight JavaScript library providing Python-style random number generation and randomization utilities. This lightweight utility module implements the most common functions from Python's random module, making it intuitive for Python developers working with JavaScript.",
   "main": "src/index.js",
   "exports": {
