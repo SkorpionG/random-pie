@@ -69,5 +69,29 @@ __tests__/
 test/
 *.test.js
 
+# Source files (only dist/ should be published)
+# src/
+
+# TypeScript config files
+tsconfig.json
+tsconfig.*.json
+
 # Configuration files
+.gitignore
+.prettierrc
 jest.config.js
+.github/
+.vscode/
+
+# Type declaration source files (the generated ones in dist/ will be published)
+# types/
+
+# CI files
+.travis.yml
+.gitlab-ci.yml
+
+# Editor files
+.editorconfig
+
+# Misc
+.DS_Store

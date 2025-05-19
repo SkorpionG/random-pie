@@ -1,4 +1,4 @@
-const PyRange = require("range-pie");
+const { PyRange } = require("range-pie");
 
 /**
  * Generates a random floating-point number between 0 (inclusive) and 1 (exclusive). It is equivalent to Math.random().

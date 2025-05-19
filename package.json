@@ -24,8 +24,13 @@
   ],
   "author": "SkorpionG2000",
   "license": "MIT",
+  "homepage": "https://github.com/SkorpionG2000/random-pie",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkorpionG2000/random-pie.git"
+  },
   "dependencies": {
-    "range-pie": "^1.0.1"
+    "range-pie": "^2.1.0"
   },
   "devDependencies": {
     "jest": "^29.7.0"
