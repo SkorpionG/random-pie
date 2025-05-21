@@ -1,5 +1,5 @@
-const { test, expect } = require("@jest/globals");
-const Random = require("../src/random");
+import { test, expect, describe } from "@jest/globals";
+import Random from "../src/random";
 
 describe("Random Class", () => {
   test("所有靜態方法都應該存在", () => {

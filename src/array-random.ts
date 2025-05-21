@@ -1,4 +1,5 @@
-const { accumulate } = require("./utils");
+import { accumulate } from "./utils";
+import { ChoicesOptions } from "./types";
 
 /**
  * Return a random element from the given array.
@@ -8,7 +9,7 @@ const { accumulate } = require("./utils");
  * @throws RangeError if the given array is empty
  * @returns {*} An element from the given array
  */
-function choice(arr) {
+function choice<T>(arr: T[]): T {
   if (!Array.isArray(arr)) {
     throw new TypeError("Argument must be an array");
   }
@@ -35,7 +36,10 @@ function choice(arr) {
  * @throws RangeError if weights contain only zeros
  * @returns {Array} An array containing k randomly selected elements
  */
-function choices(arr, { weights = null, cumWeights = null, k = 1 } = {}) {
+function choices<T>(
+  arr: T[],
+  { weights = null, cumWeights = null, k = 1 }: ChoicesOptions = {}
+): T[] {
   if (!Array.isArray(arr)) {
     throw new TypeError("First argument must be an array");
   }
@@ -70,11 +74,9 @@ function choices(arr, { weights = null, cumWeights = null, k = 1 } = {}) {
   }
 
   const totalWeights = cumWeights || (weights ? accumulate(weights) : null);
-  const total = totalWeights
-    ? totalWeights[totalWeights.length - 1]
-    : arr.length;
+  const total = totalWeights ? totalWeights[totalWeights.length - 1] : arr.length;
 
-  const result = [];
+  const result: T[] = [];
   for (let i = 0; i < k; i++) {
     const rand = Math.random() * total;
 
@@ -106,7 +108,7 @@ function choices(arr, { weights = null, cumWeights = null, k = 1 } = {}) {
  * @param {Array} arr The input array
  * @throws TypeError if the given argument is not an array
  */
-function shuffle(arr) {
+function shuffle<T>(arr: T[]): void {
   if (!Array.isArray(arr)) {
     throw new TypeError("Input must be an array");
   }
@@ -126,7 +128,7 @@ function shuffle(arr) {
  * @throws TypeError if the given argument is not an array
  * @returns {Array} A new array with the same elements, in a random order
  */
-function shuffled(arr) {
+function shuffled<T>(arr: T[]): T[] {
   if (!Array.isArray(arr)) {
     throw new TypeError("Input must be an array");
   }
@@ -148,7 +150,7 @@ function shuffled(arr) {
  * @throws RangeError if k is larger than the population size
  * @returns {Array} A list of k unique elements from the population
  */
-function sample(arr, k, counts = null) {
+function sample<T>(arr: T[], k: number, counts: number[] | null = null): T[] {
   if (!Array.isArray(arr)) {
     throw new TypeError("First argument must be an array");
   }
@@ -170,16 +172,14 @@ function sample(arr, k, counts = null) {
     }
   }
 
-  const expandedArr = counts
-    ? arr.flatMap((item, index) => Array(counts[index]).fill(item))
-    : arr;
+  const expandedArr = counts ? arr.flatMap((item, index) => Array(counts[index]).fill(item)) : arr;
 
   if (k > expandedArr.length) {
     throw new RangeError("k cannot be larger than population size");
   }
 
   const pool = [...expandedArr];
-  const result = [];
+  const result: T[] = [];
   for (let i = 0; i < k; i++) {
     const j = Math.floor(Math.random() * (pool.length - i));
     [pool[j], pool[pool.length - 1 - i]] = [pool[pool.length - 1 - i], pool[j]];
@@ -189,10 +189,4 @@ function sample(arr, k, counts = null) {
   return result;
 }
 
-module.exports = {
-  choice,
-  choices,
-  shuffle,
-  shuffled,
-  sample,
-};
+export { choice, choices, shuffle, shuffled, sample };

@@ -1,5 +1,5 @@
-const { test, expect } = require("@jest/globals");
-const { accumulate } = require("../src/utils");
+import { describe, test, expect } from "@jest/globals";
+import { accumulate } from "../src/utils";
 
 describe("Utils Functions", () => {
   describe("accumulate()", () => {
@@ -9,7 +9,7 @@ describe("Utils Functions", () => {
     });
 
     test("應該拋出型別錯誤", () => {
-      expect(() => accumulate("not an array")).toThrow(TypeError);
+      expect(() => accumulate("not an array" as unknown as number[])).toThrow(TypeError);
     });
 
     test("應該拋出範圍錯誤", () => {

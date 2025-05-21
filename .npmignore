@@ -70,7 +70,7 @@ test/
 *.test.js
 
 # Source files (only dist/ should be published)
-# src/
+src/
 
 # TypeScript config files
 tsconfig.json
@@ -84,7 +84,7 @@ jest.config.js
 .vscode/
 
 # Type declaration source files (the generated ones in dist/ will be published)
-# types/
+types/
 
 # CI files
 .travis.yml
@@ -93,5 +93,14 @@ jest.config.js
 # Editor files
 .editorconfig
 
+# Documentation source
+docs/
+CHANGELOG.md
+
 # Misc
 .DS_Store
+
+examples/
+
+# Source maps
+dist/**/*.map

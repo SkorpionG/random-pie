@@ -1,6 +1,6 @@
 # random-pie
 
-A lightweight JavaScript library providing Python-style random number generation and randomization utilities. This lightweight utility module implements the most common functions from Python's random module, making it intuitive for Python developers working with JavaScript.
+A lightweight TypeScript/JavaScript library providing Python-style random number generation and randomization utilities. This utility module implements the most common functions from Python's random module, making it intuitive for Python developers working with TypeScript or JavaScript.
 
 ⚠️ **Security Notice**: This module is not suitable for cryptographic or security-sensitive applications. For cryptographically secure operations, use Node.js's crypto module or other third-party alternatives instead.
 
@@ -8,6 +8,18 @@ A lightweight JavaScript library providing Python-style random number generation
 
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
+
+  - [JavaScript (CommonJS)](#javascript-commonjs)
+  - [TypeScript](#typescript)
+
+- [Examples](#examples)
+
+  - [Example Directory Structure](#example-directory-structure)
+  - [Running the Examples](#running-the-examples)
+
+    - [JavaScript Examples](#javascript-examples)
+    - [TypeScript Examples](#typescript-examples)
+
 - [API Reference](#api-reference)
 
   - [Number Generation](#number-generation)
@@ -39,13 +51,83 @@ npm install random-pie
 
 ## Basic Usage
 
+### JavaScript (CommonJS)
+
 ```javascript
+// Import the Random class as a named export
 const { Random } = require('random-pie');
-// or
-const Random = require('random-pie');
-// or import specific functions
+
+// OR import Random as the default export
+const Random = require('random-pie').default;
+
+// OR import the entire module (both approaches work)
+const randomPie = require('random-pie');
+const Random = randomPie.Random; // Named export
+// OR
+const Random = randomPie.default; // Default export
+
+// Import specific functions
 const { rand, randInt, choice } = require('random-pie');
 ```
+
+### TypeScript / ESM
+
+```typescript
+// Import Random as the default export
+import Random from 'random-pie';
+
+// OR import Random as a named export
+import { Random } from 'random-pie';
+
+// OR import specific functions
+import { rand, uniform, randInt, randRange, choice, choices, shuffle, shuffled, sample } from 'random-pie';
+
+// Type-safe usage examples
+const randomNumber: number = rand();
+const items: string[] = ['apple', 'banana', 'orange'];
+const selectedItem: string = choice(items);
+```
+
+## Examples
+
+The package includes a variety of examples to help you get started. These examples demonstrate different ways to use random-pie in both JavaScript and TypeScript.
+
+### Example Directory Structure
+
+```text
+examples/
+├── javascript/
+│   ├── basic-usage.js    - Basic usage with CommonJS imports
+│   └── advanced-usage.js - Advanced features with CommonJS
+├── typescript/
+│   ├── basic-usage.ts    - Basic usage with TypeScript/ESM
+│   └── advanced-usage.ts - Advanced features with TypeScript
+└── README.md             - Detailed instructions
+```
+
+### Running the Examples
+
+#### JavaScript Examples
+
+```bash
+# Run the basic JavaScript example
+node examples/javascript/basic-usage.js
+
+# Run the advanced JavaScript example
+node examples/javascript/advanced-usage.js
+```
+
+#### TypeScript Examples
+
+```bash
+# Run the basic TypeScript example
+npx ts-node examples/typescript/basic-usage.ts
+
+# Run the advanced TypeScript example
+npx ts-node examples/typescript/advanced-usage.ts
+```
+
+For more details about the examples and what they demonstrate, see the [examples/README.md](./examples/README.md) file.
 
 ## API Reference
 
@@ -164,12 +246,35 @@ const randSample = sample(['a', 'b', 'c', 'd'], 2); // ['b', 'd']
 
 Use the Random class for a more object-oriented approach:
 
-```javascript
-const random = new Random();
+### JavaScript
 
-random.randInt(1, 10);
-random.choice(['heads', 'tails']);
-random.shuffle([1, 2, 3, 4, 5]);
+```javascript
+// Using default export
+const Random = require('random-pie').default;
+
+// OR using named export
+const { Random } = require('random-pie');
+
+// Static methods
+Random.randInt(1, 10);
+Random.choice(['heads', 'tails']);
+Random.shuffle([1, 2, 3, 4, 5]);
+```
+
+### TypeScript
+
+```typescript
+// Using default export
+import Random from 'random-pie';
+
+// OR using named export
+import { Random } from 'random-pie';
+
+// Type-safe operations
+const randomInt: number = Random.randInt(1, 10);
+const selection: string = Random.choice<string>(['heads', 'tails']);
+const numbers: number[] = [1, 2, 3, 4, 5];
+Random.shuffle(numbers);
 ```
 
 ## API Reference Table

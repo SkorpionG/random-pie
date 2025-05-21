@@ -1,10 +1,10 @@
-const { PyRange } = require("range-pie");
+import { PyRange } from "range-pie";
 
 /**
  * Generates a random floating-point number between 0 (inclusive) and 1 (exclusive). It is equivalent to Math.random().
  * @returns {number} A random floating-point number between 0 and 1
  */
-function rand() {
+function rand(): number {
   return Math.random();
 }
 
@@ -16,7 +16,7 @@ function rand() {
  * @throws {RangeError} If max is less than or equal to min
  * @returns {number} A random floating-point number between min and max
  */
-function uniform(min, max) {
+function uniform(min: number, max: number): number {
   if (typeof min !== "number" || typeof max !== "number") {
     throw new TypeError("Both min and max must be a number");
   }
@@ -39,7 +39,7 @@ function uniform(min, max) {
  * @throws {Error} If the arguments count is not between 1 and 3.
  * @returns {number} A random integer within the specified range
  */
-function randInt(...args) {
+function randInt(...args: number[]): number {
   const numberRange = new PyRange(...args);
 
   if (numberRange.length === 0) {
@@ -68,7 +68,7 @@ function randInt(...args) {
  * @throws {Error} If the arguments count is not between 1 and 3.
  * @returns {number} The random number
  */
-function randRange(...args) {
+function randRange(...args: number[]): number {
   const numberRange = new PyRange(...args);
 
   if (numberRange.length === 0) {
@@ -78,9 +78,4 @@ function randRange(...args) {
   return numberRange.at(Math.floor(Math.random() * numberRange.length));
 }
 
-module.exports = {
-  rand,
-  uniform,
-  randInt,
-  randRange,
-};
+export { rand, uniform, randInt, randRange };

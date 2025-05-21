@@ -1,11 +1,5 @@
-const { test, expect } = require("@jest/globals");
-const {
-  choice,
-  choices,
-  shuffle,
-  shuffled,
-  sample,
-} = require("../src/array-random");
+import { test, expect, describe } from "@jest/globals";
+import { choice, choices, shuffle, shuffled, sample } from "../src/array-random";
 
 describe("Array Random Functions", () => {
   describe("choice()", () => {
@@ -16,7 +10,7 @@ describe("Array Random Functions", () => {
     });
 
     test("應該拋出型別錯誤", () => {
-      expect(() => choice("not an array")).toThrow(TypeError);
+      expect(() => choice("not an array" as unknown as any[])).toThrow(TypeError);
     });
 
     test("應該拋出範圍錯誤", () => {
@@ -37,7 +31,7 @@ describe("Array Random Functions", () => {
 
   describe("choices()", () => {
     test("First argument should be an array", () => {
-      expect(() => choices("not an array")).toThrow(TypeError);
+      expect(() => choices("not an array" as unknown as any[])).toThrow(TypeError);
     });
 
     test("First argument should be an empty array", () => {
@@ -51,30 +45,26 @@ describe("Array Random Functions", () => {
 
     test("Some negative weight", () => {
       const arr = [1, 2, 3, 4, 5];
-      expect(() => choices(arr, { k: 2, weights: [1, -1, 1, 2, -1] })).toThrow(
-        RangeError
-      );
+      expect(() => choices(arr, { k: 2, weights: [1, -1, 1, 2, -1] })).toThrow(RangeError);
     });
 
     test("cumWeights argument should be an array", () => {
       const arr = [1, 2, 3, 4, 5];
-      expect(() => choices(arr, { cumWeights: "not an array" })).toThrow(
+      expect(() => choices(arr, { cumWeights: "not an array" as unknown as number[] })).toThrow(
         TypeError
       );
     });
 
     test("Weights argument should be an array", () => {
       const arr = [1, 2, 3, 4, 5];
-      expect(() => choices(arr, { weights: "not an array" })).toThrow(
+      expect(() => choices(arr, { weights: "not an array" as unknown as number[] })).toThrow(
         TypeError
       );
     });
 
     test("Provide both weights and cumWeights", () => {
       const arr = [1, 2];
-      expect(() =>
-        choices(arr, { weights: [1, 2], cumWeights: [1, 2] })
-      ).toThrow(TypeError);
+      expect(() => choices(arr, { weights: [1, 2], cumWeights: [1, 2] })).toThrow(TypeError);
     });
 
     test("應該回傳指定數量的元素", () => {
@@ -122,7 +112,7 @@ describe("Array Random Functions", () => {
 
   describe("shuffle()", () => {
     test("First argument should be an array", () => {
-      expect(() => shuffle("not an array")).toThrow(Error);
+      expect(() => shuffle("not an array" as unknown as any[])).toThrow(Error);
     });
 
     test("應該打亂陣列", () => {
@@ -161,7 +151,7 @@ describe("Array Random Functions", () => {
 
   describe("shuffled()", () => {
     test("First argument should be an array", () => {
-      expect(() => shuffled("not an array")).toThrow(Error);
+      expect(() => shuffled("not an array" as unknown as any[])).toThrow(Error);
     });
 
     test("should not modify the original array", () => {
@@ -204,15 +194,15 @@ describe("Array Random Functions", () => {
 
   describe("sample()", () => {
     test("First argument should be an array", () => {
-      expect(() => sample("not an array")).toThrow(TypeError);
+      expect(() => sample("not an array" as unknown as any[], 1)).toThrow(TypeError);
     });
 
     test("k should be an integer", () => {
-      expect(() => sample([], "not an integer")).toThrow(TypeError);
+      expect(() => sample([], "not an integer" as unknown as number)).toThrow(TypeError);
     });
 
     test("counts should be an array", () => {
-      expect(() => sample([1, 2, 3], 1, "not an array")).toThrow(TypeError);
+      expect(() => sample([1, 2, 3], 1, "not an array" as unknown as number[])).toThrow(TypeError);
     });
 
     test("counts length should match array length", () => {

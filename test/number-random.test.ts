@@ -1,5 +1,5 @@
-const { test, expect } = require("@jest/globals");
-const { rand, uniform, randInt, randRange } = require("../src/number-random");
+import { test, expect, describe } from "@jest/globals";
+import { rand, uniform, randInt, randRange } from "../src/number-random";
 
 describe("Number Random Functions", () => {
   describe("rand()", () => {
@@ -18,8 +18,8 @@ describe("Number Random Functions", () => {
     });
 
     test("應該拋出型別錯誤", () => {
-      expect(() => uniform("1", 10)).toThrow(TypeError);
-      expect(() => uniform(1, "10")).toThrow(TypeError);
+      expect(() => uniform("1" as unknown as number, 10)).toThrow(TypeError);
+      expect(() => uniform(1, "10" as unknown as number)).toThrow(TypeError);
     });
 
     test("應該拋出範圍錯誤", () => {
