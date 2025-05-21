@@ -48,7 +48,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -103,4 +102,4 @@ CHANGELOG.md
 examples/
 
 # Source maps
-dist/**/*.map
+**/*.map
