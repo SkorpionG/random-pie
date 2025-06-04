@@ -33,6 +33,11 @@ console.log(`Random number: ${rand()}`);
 console.log(`Random float (1-10): ${uniform(1, 10)}`);
 console.log(`Random integer (0-10): ${randInt(0, 10)}`);
 console.log(`Random item: ${choice(["apple", "banana", "orange"])}`);
+const array = [1, 2, 3, 4, 5];
+console.log(`Original array: ${array}`);
+shuffle(array);
+console.log(`Shuffled array: ${array}`);
+console.log(`Sampled array: ${sample(["apple", "banana", "orange"], 2)}`);
 
 // Method 4: Import everything with namespace
 // Note: In a real project, you would use: import * as randomPie from 'random-pie';

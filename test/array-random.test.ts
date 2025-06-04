@@ -156,7 +156,7 @@ describe("Array Random Functions", () => {
 
     test("should not modify the original array", () => {
       const arr = [1, 2, 3, 4, 5];
-      const shuffledArr = shuffled(arr);
+      shuffled(arr);
       expect(arr).toEqual(arr);
     });
 

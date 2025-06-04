@@ -45,7 +45,10 @@ console.log("selectedItem:", selectedItem);
 
 const numbers: number[] = [1, 2, 3, 4, 5];
 shuffle(numbers);
-console.log("shuffled numbers:", numbers);
+console.log("shuffledNumbers:", numbers);
+
+const shuffledItems: string[] = shuffled(["a", "b", "c", "d", "e"]);
+console.log("shuffledItems:", shuffledItems);
 
 const randomItems: string[] = choices(items, { k: 2 });
 console.log("randomItems:", randomItems);
