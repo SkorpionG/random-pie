@@ -54,7 +54,7 @@
     "url": "git+https://github.com/SkorpionG2000/random-pie.git"
   },
   "dependencies": {
-    "range-pie": "^2.1.0"
+    "range-pie": "^2.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
