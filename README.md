@@ -2,6 +2,9 @@
 
 A lightweight TypeScript/JavaScript library providing Python-style random number generation and randomization utilities. This utility module implements the most common functions from Python's random module, making it intuitive for Python developers working with TypeScript or JavaScript.
 
+[![npm version](https://img.shields.io/npm/v/random-pie.svg)](https://www.npmjs.com/package/random-pie)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 ⚠️ **Security Notice**: This module is not suitable for cryptographic or security-sensitive applications. For cryptographically secure operations, use Node.js's crypto module or other third-party alternatives instead.
 
 ## Table of Contents
