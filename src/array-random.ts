@@ -34,6 +34,9 @@ function choice<T>(arr: T[]): T {
  * @throws RangeError if weights or cumWeights length does not match array length
  * @throws RangeError if weights contain negative values
  * @throws RangeError if weights contain only zeros
+ * @throws RangeError if cumWeights contain negative values
+ * @throws RangeError if cumWeights are not monotonically non-decreasing
+ * @throws RangeError if the total of cumWeights is zero
  * @returns {Array} An array containing k randomly selected elements
  */
 function choices<T>(
@@ -67,6 +70,19 @@ function choices<T>(
   }
   if (cumWeights && cumWeights.length !== arr.length) {
     throw new RangeError("cumWeights length must match array length");
+  }
+  if (cumWeights) {
+    if (cumWeights.some((w) => w < 0)) {
+      throw new RangeError("cumWeights must be non-negative");
+    }
+    if (cumWeights[cumWeights.length - 1] <= 0) {
+      throw new RangeError("cumWeights must contain at least one non-zero value");
+    }
+    for (let i = 1; i < cumWeights.length; i++) {
+      if (cumWeights[i] < cumWeights[i - 1]) {
+        throw new RangeError("cumWeights must be non-decreasing");
+      }
+    }
   }
 
   if (weights && cumWeights) {
@@ -145,10 +161,11 @@ function shuffled<T>(arr: T[]): T[] {
  *
  * @param {Array} arr The population sequence
  * @param {number} k The number of elements to choose
- * @param {Array<number>=} counts The weights for each element in the population
+ * @param {Array<number>=} counts Optional repeat counts for each element, expanding the population
  * @throws TypeError if the given arguments are invalid
- * @throws RangeError if k is larger than the population size
- * @returns {Array} A list of k unique elements from the population
+ * @throws RangeError if k is larger than arr.length and no counts are provided
+ * @throws RangeError if k is larger than the total expanded population size (when counts is provided)
+ * @returns {Array} A list of k unique elements chosen from the population
  */
 function sample<T>(arr: T[], k: number, counts: number[] | null = null): T[] {
   if (!Array.isArray(arr)) {
@@ -156,9 +173,6 @@ function sample<T>(arr: T[], k: number, counts: number[] | null = null): T[] {
   }
   if (!Number.isInteger(k) || k < 0) {
     throw new TypeError("k must be a non-negative integer");
-  }
-  if (k > arr.length) {
-    throw new RangeError("k cannot be larger than array length");
   }
   if (counts !== null) {
     if (!Array.isArray(counts)) {
@@ -170,6 +184,11 @@ function sample<T>(arr: T[], k: number, counts: number[] | null = null): T[] {
     if (!counts.every((n) => Number.isInteger(n) && n >= 0)) {
       throw new TypeError("counts must contain non-negative integers");
     }
+  }
+
+  // When counts is null, k cannot exceed the array length
+  if (counts === null && k > arr.length) {
+    throw new RangeError("k cannot be larger than array length");
   }
 
   const expandedArr = counts ? arr.flatMap((item, index) => Array(counts[index]).fill(item)) : arr;

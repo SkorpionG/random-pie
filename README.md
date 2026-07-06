@@ -11,29 +11,23 @@ A lightweight TypeScript/JavaScript library providing Python-style random number
 
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
-
   - [JavaScript (CommonJS)](#javascript-commonjs)
   - [TypeScript](#typescript)
 
 - [Examples](#examples)
-
   - [Example Directory Structure](#example-directory-structure)
   - [Running the Examples](#running-the-examples)
-
     - [JavaScript Examples](#javascript-examples)
     - [TypeScript Examples](#typescript-examples)
 
 - [API Reference](#api-reference)
-
   - [Number Generation](#number-generation)
-
     - [rand()](#rand)
     - [uniform()](#uniform)
     - [randInt()](#randint)
     - [randRange()](#randrange)
 
   - [Array Operations](#array-operations)
-
     - [choice()](#choice)
     - [choices()](#choices)
     - [shuffle()](#shuffle)
@@ -42,7 +36,6 @@ A lightweight TypeScript/JavaScript library providing Python-style random number
 
 - [Class Interface](#class-interface)
 - [API Reference Table](#api-reference-table)
-  
   - [Number Functions](#number-functions)
   - [Array Functions](#array-functions)
 
@@ -58,36 +51,46 @@ npm install random-pie
 
 ```javascript
 // Import the Random class as a named export
-const { Random } = require('random-pie');
+const { Random } = require("random-pie");
 
 // OR import Random as the default export
-const Random = require('random-pie').default;
+const Random = require("random-pie").default;
 
 // OR import the entire module (both approaches work)
-const randomPie = require('random-pie');
+const randomPie = require("random-pie");
 const Random = randomPie.Random; // Named export
 // OR
 const Random = randomPie.default; // Default export
 
 // Import specific functions
-const { rand, randInt, choice } = require('random-pie');
+const { rand, randInt, choice } = require("random-pie");
 ```
 
 ### TypeScript / ESM
 
 ```typescript
 // Import Random as the default export
-import Random from 'random-pie';
+import Random from "random-pie";
 
 // OR import Random as a named export
-import { Random } from 'random-pie';
+import { Random } from "random-pie";
 
 // OR import specific functions
-import { rand, uniform, randInt, randRange, choice, choices, shuffle, shuffled, sample } from 'random-pie';
+import {
+  rand,
+  uniform,
+  randInt,
+  randRange,
+  choice,
+  choices,
+  shuffle,
+  shuffled,
+  sample,
+} from "random-pie";
 
 // Type-safe usage examples
 const randomNumber: number = rand();
-const items: string[] = ['apple', 'banana', 'orange'];
+const items: string[] = ["apple", "banana", "orange"];
 const selectedItem: string = choice(items);
 ```
 
@@ -147,7 +150,7 @@ rand(); // 0.7249081475312897
 
 #### uniform()
 
-Similar to [`random.uniform(min, max)`](https://docs.python.org/3/library/random.html#random.uniform) in Python, which returns a random float value between min and max (both inclusive). Min and max values can be a floating point number.
+Similar to [`random.uniform(min, max)`](https://docs.python.org/3/library/random.html#random.uniform) in Python, which returns a random float value between min (inclusive) and max (exclusive). Min and max values can be floating point numbers.
 
 ```javascript
 // Generate float in range
@@ -192,25 +195,24 @@ Similar to [`random.choice()`](https://docs.python.org/3/library/random.html#ran
 
 ```javascript
 // Select a random item from the array
-const randomFruit = choice(['apple', 'banana', 'orange']); // 'banana'
-
+const randomFruit = choice(["apple", "banana", "orange"]); // 'banana'
 ```
 
 #### choices()
 
 Similar to [`random.choices()`](https://docs.python.org/3/library/random.html#random.choices). This function accepts two arguments, the first one being an array to choose from, and the second one being an object that contains configuration to the choices function. The object at the second argument can contain the following properties:
 
-- weights: An array that contain the weight the given array in the first argument. Optional and is default to null.
-- cumWeights: Similar to weights, except the array given to this property should be the cumulative weights. Optional and is default to null.
+- weights: An array that contains the relative weight for each element in the first argument. Optional and defaults to null. Values must be non-negative and at least one value must be non-zero.
+- cumWeights: Similar to weights, except the array should contain cumulative weights. Optional and defaults to null. Values must be non-negative, non-decreasing, and have a final total greater than zero.
 - k: The number of elements to select from the array. Optional and is default to 1.
 
-If neither weights or cumWeights are provided, the array element is selected on based on equal probability. If both weights and cumWeights are provided, an `TypeError` will the thrown. Both weights or cumWeights should be an array with equal length as the array in the first argument.
+If neither weights nor cumWeights are provided, array elements are selected with equal probability. If both weights and cumWeights are provided, a `TypeError` will be thrown. Both weights and cumWeights must be arrays with the same length as the array in the first argument.
 
 ```javascript
 // Multiple random selections with weights
-const randomColors = choices(['red', 'green', 'blue'], {
-    weights: [2, 1, 1],
-    k: 3
+const randomColors = choices(["red", "green", "blue"], {
+  weights: [2, 1, 1],
+  k: 3,
 }); // ['red', 'red', 'blue']
 ```
 
@@ -238,11 +240,16 @@ const shuffledArr = shuffled(arr); // [3, 1, 5, 2, 4]
 
 Similar to [`random.sample()`](https://docs.python.org/3/library/random.html#random.sample) in Python.
 
-Different from the `choices` function, this function does not select repeated values. If multiple repeated values are present in the first argument array, each occurrence of the repeated value is possible to be sampled.
+Different from the `choices` function, this function does not select repeated values (without replacement). If multiple repeated values are present in the first argument array, each occurrence of the repeated value is possible to be sampled.
+
+The function accepts a third optional argument `counts`, which is an array of integers that correspond to each element in the input array. It effectively expands the population by repeating each element `counts[i]` times before sampling.
 
 ```javascript
 // Sample k items from array
-const randSample = sample(['a', 'b', 'c', 'd'], 2); // ['b', 'd']
+const randSample = sample(["a", "b", "c", "d"], 2); // ['b', 'd']
+
+// Sample with counts (population becomes ["a", "a", "b"])
+const countsSample = sample(["a", "b"], 3, [2, 1]); // ['a', 'a', 'b'] (in any order)
 ```
 
 ## Class Interface
@@ -253,14 +260,14 @@ Use the Random class for a more object-oriented approach:
 
 ```javascript
 // Using default export
-const Random = require('random-pie').default;
+const Random = require("random-pie").default;
 
 // OR using named export
-const { Random } = require('random-pie');
+const { Random } = require("random-pie");
 
 // Static methods
 Random.randInt(1, 10);
-Random.choice(['heads', 'tails']);
+Random.choice(["heads", "tails"]);
 Random.shuffle([1, 2, 3, 4, 5]);
 ```
 
@@ -268,14 +275,14 @@ Random.shuffle([1, 2, 3, 4, 5]);
 
 ```typescript
 // Using default export
-import Random from 'random-pie';
+import Random from "random-pie";
 
 // OR using named export
-import { Random } from 'random-pie';
+import { Random } from "random-pie";
 
 // Type-safe operations
 const randomInt: number = Random.randInt(1, 10);
-const selection: string = Random.choice<string>(['heads', 'tails']);
+const selection: string = Random.choice<string>(["heads", "tails"]);
 const numbers: number[] = [1, 2, 3, 4, 5];
 Random.shuffle(numbers);
 ```
@@ -284,19 +291,19 @@ Random.shuffle(numbers);
 
 ### Number Functions
 
-| Function | Description |
-|----------|-------------|
-| rand() | Returns float between 0 and 1 |
-| uniform(min, max) | Returns float between min and max |
-| randInt(...args) | Returns integer from range |
-| randRange(...args) | Returns number from range |
+| Function           | Description                   |
+| ------------------ | ----------------------------- |
+| rand()             | Returns float between 0 and 1 |
+| uniform(min, max)  | Returns float in [min, max)   |
+| randInt(...args)   | Returns integer from range    |
+| randRange(...args) | Returns number from range     |
 
 ### Array Functions
 
-| Function | Description |
-|----------|-------------|
-| choice(arr) | Returns random item from array |
-| choices(arr, options) | Returns multiple random items |
-| shuffle(arr) | Shuffles array in place |
-| shuffled(arr) | Returns a shuffled array |
-| sample(arr, k, counts) | Returns k random items |
+| Function               | Description                    |
+| ---------------------- | ------------------------------ |
+| choice(arr)            | Returns random item from array |
+| choices(arr, options)  | Returns multiple random items  |
+| shuffle(arr)           | Shuffles array in place        |
+| shuffled(arr)          | Returns a shuffled array       |
+| sample(arr, k, counts) | Returns k random items         |

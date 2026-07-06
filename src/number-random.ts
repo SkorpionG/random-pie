@@ -1,6 +1,18 @@
 import { PyRange } from "range-pie";
 
 /**
+ * Creates a PyRange instance from 1, 2, or 3 numeric arguments.
+ * This helper avoids a TypeScript TS2556 spread error when passing a rest
+ * parameter to a constructor with explicit overloads.
+ */
+function createPyRange(args: number[]): PyRange {
+  if (args.length === 1) return new PyRange(args[0]);
+  if (args.length === 2) return new PyRange(args[0], args[1]);
+  if (args.length === 3) return new PyRange(args[0], args[1], args[2]);
+  throw new Error("Expected 1 to 3 numeric arguments, but received " + args.length);
+}
+
+/**
  * Generates a random floating-point number between 0 (inclusive) and 1 (exclusive). It is equivalent to Math.random().
  * @returns {number} A random floating-point number between 0 and 1
  */
@@ -9,12 +21,13 @@ function rand(): number {
 }
 
 /**
- * Generates a random floating-point number within a given range. The range is inclusive, meaning both min and max are included (min <= number <= max).
- * @param {number} min The minimum value of the range
- * @param {number} max The maximum value of the range
+ * Generates a random floating-point number within a given range. The range is half-open,
+ * meaning min is included and max is excluded (min <= number < max).
+ * @param {number} min The minimum value of the range (inclusive)
+ * @param {number} max The maximum value of the range (exclusive)
  * @throws {TypeError} If min or max is not a number
  * @throws {RangeError} If max is less than or equal to min
- * @returns {number} A random floating-point number between min and max
+ * @returns {number} A random floating-point number in [min, max)
  */
 function uniform(min: number, max: number): number {
   if (typeof min !== "number" || typeof max !== "number") {
@@ -40,7 +53,7 @@ function uniform(min: number, max: number): number {
  * @returns {number} A random integer within the specified range
  */
 function randInt(...args: number[]): number {
-  const numberRange = new PyRange(...args);
+  const numberRange = createPyRange(args);
 
   if (numberRange.length === 0) {
     return 0;
@@ -52,7 +65,7 @@ function randInt(...args: number[]): number {
     return numberRange.stop;
   }
 
-  return numberRange.at(randomIndex);
+  return numberRange.at(randomIndex) as number;
 }
 
 /**
@@ -69,13 +82,13 @@ function randInt(...args: number[]): number {
  * @returns {number} The random number
  */
 function randRange(...args: number[]): number {
-  const numberRange = new PyRange(...args);
+  const numberRange = createPyRange(args);
 
   if (numberRange.length === 0) {
     return 0;
   }
 
-  return numberRange.at(Math.floor(Math.random() * numberRange.length));
+  return numberRange.at(Math.floor(Math.random() * numberRange.length)) as number;
 }
 
 export { rand, uniform, randInt, randRange };

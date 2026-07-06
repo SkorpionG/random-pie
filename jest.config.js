@@ -17,6 +17,12 @@ export default {
       "ts-jest",
       {
         tsconfig: "tsconfig.json",
+        diagnostics: {
+          // Code 151002: "File ... is not under 'rootDir'" — a spurious ts-jest
+          // warning that fires when ts-jest processes files outside the rootDir
+          // (e.g. test/ while rootDir is src/). Safe to suppress.
+          ignoreCodes: [151002],
+        },
       },
     ],
   },

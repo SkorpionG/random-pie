@@ -82,8 +82,8 @@ class Random {
    * Returns k unique elements chosen from the population sequence.
    * @param arr The population sequence
    * @param k The number of elements to choose
-   * @param counts The weights for each element in the population
-   * @returns A list of k unique elements from the population
+   * @param counts Optional repeat counts for each element, expanding the population
+   * @returns A list of k unique elements chosen from the population
    */
   static sample<T>(arr: T[], k: number, counts?: number[] | null): T[] {
     return sample(arr, k, counts);

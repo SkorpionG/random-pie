@@ -2,7 +2,7 @@ import { test, expect, describe } from "@jest/globals";
 import Random from "../src/random";
 
 describe("Random Class", () => {
-  test("所有靜態方法都應該存在", () => {
+  test("all static methods should exist", () => {
     expect(typeof Random.rand).toBe("function");
     expect(typeof Random.uniform).toBe("function");
     expect(typeof Random.randInt).toBe("function");
@@ -14,7 +14,7 @@ describe("Random Class", () => {
     expect(typeof Random.sample).toBe("function");
   });
 
-  test("應該正確代理所有方法調用", () => {
+  test("should correctly proxy all method calls", () => {
     const arr = [1, 2, 3];
     expect(Random.rand()).toBeGreaterThanOrEqual(0);
     expect(Random.rand()).toBeLessThan(1);
@@ -23,44 +23,44 @@ describe("Random Class", () => {
     expect(arr).toContain(Random.choice(arr));
   });
 
-  test("uniform 方法應該處理邊界值", () => {
+  test("uniform method should handle boundary values", () => {
     const result = Random.uniform(0, 1);
     expect(result).toBeGreaterThanOrEqual(0);
     expect(result).toBeLessThan(1);
   });
 
-  test("randRange 方法應該處理邊界值", () => {
+  test("randRange method should handle boundary values", () => {
     const result = Random.randRange(0, 1);
     expect(result).toEqual(0);
     expect(result).toBeLessThan(1);
   });
 
-  test("randInt 方法應該處理步進值", () => {
+  test("randInt method should respect step argument", () => {
     const result = Random.randInt(0, 10, 2);
     expect(result % 2).toBe(0);
   });
 
-  test("choice 方法應該處理單一元素陣列", () => {
+  test("choice method should handle single-element array", () => {
     expect(Random.choice([1])).toBe(1);
   });
 
-  test("choices 方法應該處理單一元素陣列", () => {
+  test("choices method should handle single-element array", () => {
     expect(Random.choices([1], { k: 1 })).toEqual([1]);
   });
 
-  test("shuffle 方法不應該回傳新的陣列", () => {
+  test("shuffle method should modify array in place (not return a new array)", () => {
     const arr = [1, 2, 3];
     Random.shuffle(arr);
     expect(arr).toBe(arr);
   });
 
-  test("shuffled 方法應該回傳新的陣列", () => {
+  test("shuffled method should return a new array", () => {
     const arr = [1, 2, 3];
     const shuffled = Random.shuffled([...arr]);
     expect(shuffled).not.toBe(arr);
   });
 
-  test("sample 方法應該回傳新的陣列", () => {
+  test("sample method should return a new array", () => {
     const arr = [1, 2, 3];
     const sample = Random.sample([...arr], 2);
     expect(sample).not.toBe(arr);
